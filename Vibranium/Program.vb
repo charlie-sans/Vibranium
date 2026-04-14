@@ -1,4 +1,5 @@
-﻿Module Program
+﻿Imports VibraniumCore.Class1
+Module Program
 
     Sub Main(ByVal args As String())
         Dim Knl As Kernel = New Kernel()

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using FunkyApp;
 using System.Reflection;
+using Vibranium.Core.interfaces;
 
 namespace FunkyApp.Core
 {
@@ -11,12 +12,32 @@ namespace FunkyApp.Core
     {
 
 
-        void Application.Deconstruct()
+
+        string Application.Name
         {
-            throw new NotImplementedException();
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
         }
 
         string Application.Description
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        string Application.Version
         {
             get
             {
@@ -33,33 +54,9 @@ namespace FunkyApp.Core
             throw new NotImplementedException();
         }
 
-        string Application.Name
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        void Application.Update()
+        void Application.Run()
         {
             throw new NotImplementedException();
-        }
-
-        string Application.Version
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
         }
     }
 }

@@ -1,10 +1,10 @@
-// Vibranium.Core.h
+// Anchovies.h
 
 #pragma once
 
 using namespace System;
 
-namespace VibraniumCore {
+namespace Anchovies {
 
 	public ref class Class1
 	{

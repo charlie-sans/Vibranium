@@ -11,11 +11,11 @@ using namespace System::Security::Permissions;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 //
-[assembly:AssemblyTitleAttribute("VibraniumCore")];
+[assembly:AssemblyTitleAttribute("Anchovies")];
 [assembly:AssemblyDescriptionAttribute("")];
 [assembly:AssemblyConfigurationAttribute("")];
 [assembly:AssemblyCompanyAttribute("")];
-[assembly:AssemblyProductAttribute("VibraniumCore")];
+[assembly:AssemblyProductAttribute("Anchovies")];
 [assembly:AssemblyCopyrightAttribute("Copyright (c)  2026")];
 [assembly:AssemblyTrademarkAttribute("")];
 [assembly:AssemblyCultureAttribute("")];

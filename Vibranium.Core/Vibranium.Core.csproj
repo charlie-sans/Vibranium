@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{409CC12D-1DE3-474C-A18B-2256BE1A4D96}</ProjectGuid>
+    <ProjectGuid>{F5F5A443-1C77-4703-AC10-D2BFCA413E48}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FunkyApp.Core</RootNamespace>
-    <AssemblyName>FunkyApp.Core</AssemblyName>
+    <RootNamespace>Vibranium.Core</RootNamespace>
+    <AssemblyName>Vibranium.Core</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -33,8 +33,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -42,32 +40,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GUI\AboutBox1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GUI\AboutBox1.Designer.cs">
-      <DependentUpon>AboutBox1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Terminals\Konsole.cs" />
+    <Compile Include="interfaces\Application.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reflection\ApplicationLoader.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Vibranium.Core\Vibranium.Core.csproj">
-      <Project>{F5F5A443-1C77-4703-AC10-D2BFCA413E48}</Project>
-      <Name>Vibranium.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Vibranium\Vibranium.vbproj">
-      <Project>{583DA2E7-2A32-4D11-B4B2-DB43B6C93728}</Project>
-      <Name>Vibranium</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
-    <EmbeddedResource Include="GUI\AboutBox1.resx">
-      <DependentUpon>AboutBox1.cs</DependentUpon>
-    </EmbeddedResource>
+    <None Include="Vibranium.Core.notes" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties NotesItemIdentifier="Vibranium.Core.notes" />
+    </VisualStudio>
+  </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

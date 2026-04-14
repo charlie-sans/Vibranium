@@ -86,6 +86,12 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileSystem\DeviceNode.vb" />
+    <Compile Include="FileSystem\DirectoryNode.vb" />
+    <Compile Include="FileSystem\ExecutableNode.vb" />
+    <Compile Include="FileSystem\FileNode.vb" />
+    <Compile Include="FileSystem\GeneratorNode.vb" />
+    <Compile Include="FileSystem\VNode.vb" />
     <Compile Include="Kernel\Kernel.vb" />
     <Compile Include="Program.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -110,10 +116,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Services\ServiceHandler.vb" />
-    <Compile Include="Templates\Application.vb" />
     <Compile Include="Templates\Service.vb" />
     <Compile Include="Kernel\GlobalCode.vb" />
-    <Compile Include="VFS\VFS.vb" />
+    <Compile Include="FileSystem\VFS.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -160,7 +165,12 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Vibranium.Core\Vibranium.Core.csproj">
+      <Project>{F5F5A443-1C77-4703-AC10-D2BFCA413E48}</Project>
+      <Name>Vibranium.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

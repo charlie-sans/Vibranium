@@ -1,55 +1,154 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Comment CommentText="This is the main Diagram for the Whole Operating system&#xD;&#xA;">
-    <Position X="4.188" Y="0.5" Height="0.75" Width="1.7" />
-  </Comment>
-  <Class Name="FunkyApp.VirtualFileSystem" Collapsed="true">
-    <Position X="2.25" Y="1.5" Width="1.5" />
+  <Class Name="Vibranium.DeviceNode" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAEAAkSAAAAAAAAACAEBAEAAImAAAAAgAAAAYkQAUA=</HashCode>
-      <FileName>VFS\VFS.vb</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>FileSystem\DeviceNode.vb</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FunkyApp.Kernel" Collapsed="true">
-    <Position X="2.25" Y="0.5" Width="1.5" />
+  <Class Name="Vibranium.DirectoryNode" Collapsed="true">
+    <Position X="2.75" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>gAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAIAAACAAAAAAA=</HashCode>
+      <HashCode>AAIAAAAAAAAAAAAAAAIEAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FileSystem\DirectoryNode.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Vibranium.VExecutableNode" Collapsed="true">
+    <Position X="5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>FileSystem\ExecutableNode.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Vibranium.FileNode" Collapsed="true">
+    <Position X="7.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAAAAAACAAAAgAAAAAAAA=</HashCode>
+      <FileName>FileSystem\FileNode.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Vibranium.VGeneratedNode" Collapsed="true">
+    <Position X="9.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAA=</HashCode>
+      <FileName>FileSystem\GeneratorNode.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Vibranium.VirtualFileSystem" Collapsed="true">
+    <Position X="15.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAACAAAQAASAAAAAAoAAAAAAAAQAAAoEQBEA=</HashCode>
+      <FileName>FileSystem\VFS.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Vibranium.VNode" Collapsed="true">
+    <Position X="5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAAAQAEEAAQAQAAAAAACAAAAgAAAAIAAA=</HashCode>
+      <FileName>FileSystem\VNode.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Vibranium.IOSystem" Collapsed="true">
+    <Position X="13.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QABgAAAAAAAAAAAIAAAAAAAgEAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Kernel\IO\IOSystem.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Vibranium.Kernel" Collapsed="true">
+    <Position X="15.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAIAAACAAAAAAA=</HashCode>
       <FileName>Kernel\Kernel.vb</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FunkyApp.ServiceHandler" Collapsed="true">
-    <Position X="0.5" Y="1.5" Width="1.5" />
+  <Class Name="Vibranium.ProcessManager" Collapsed="true">
+    <Position X="13.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>QAAAAAAAAAAAACAUAAAAAAAAAAEAACAAAAAgAAAIQAA=</HashCode>
+      <FileName>Kernel\ProcessManager\ProcessManager.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Vibranium.ProcessNode" Collapsed="true">
+    <Position X="15.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAAAAAAAgAERAQAAAAAAAAAAAAAAACAQAA=</HashCode>
+      <FileName>Kernel\ProcessManager\ProcessNode.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Vibranium.ProgramRegistry" Collapsed="true">
+    <Position X="12" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAQAIAAAAAAAAAAAAABAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Kernel\ProcessManager\ProgramRegistry.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Vibranium.ServiceHandler" Collapsed="true">
+    <Position X="13.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACACAAQAA=</HashCode>
       <FileName>Services\ServiceHandler.vb</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FunkyApp.AboutBox1" Collapsed="true">
-    <Position X="0.5" Y="0.5" Width="1.5" />
+  <Class Name="Vibranium.AboutBox1" Collapsed="true">
+    <Position X="12" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAgAAASAAAAAAAACEAABCgAAAAAIAAACACAAQAAA=</HashCode>
-      <FileName>Services\AboutBox1.vb</FileName>
+      <FileName>Templates\AboutBox1.vb</FileName>
     </TypeIdentifier>
   </Class>
-  <Interface Name="FunkyApp.Service" Collapsed="true">
-    <Position X="2.25" Y="4" Width="1.5" />
+  <Class Name="Vibranium.My.MySettings" Collapsed="true">
+    <Position X="12" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAEAAAAAAQAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Vibranium.IProcess" Collapsed="true">
+    <Position X="12" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAAAAAAAAAARAQAAAAAAAAAAAAAAACAQAA=</HashCode>
+      <FileName>Kernel\ProcessManager\IProcess.vb</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Vibranium.Service" Collapsed="true">
+    <Position X="13.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAQAAEAAAAAAQAACABAAAAA=</HashCode>
       <FileName>Templates\Service.vb</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="FunkyApp.Application" Collapsed="true">
-    <Position X="0.5" Y="4" Width="1.5" />
+  <Module Name="Vibranium.Sys" Collapsed="true">
+    <Position X="13.75" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>IAQAAAAAAAAgAAAAAAAAgAQAAAAAAAAAAAACAAAAAAA=</HashCode>
-      <FileName>Templates\Application.vb</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Module Name="FunkyApp.GlobalCode" Collapsed="true">
-    <Position X="0.5" Y="2.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AgAAAAAAAEAAAEAAAAAAAAQAAAAAAAAAAAAAAgAAAAA=</HashCode>
       <FileName>Kernel\GlobalCode.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="Vibranium.Program" Collapsed="true">
+    <Position X="13.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="Vibranium.Startup" Collapsed="true">
+    <Position X="12" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAAAAAAAAAAAAAAIAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Visuals\Startup.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="Vibranium.My.Resources.Resources" Collapsed="true">
+    <Position X="15.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="Vibranium.My.MySettingsProperty" Collapsed="true">
+    <Position X="12" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Module>
   <Font Name="Segoe UI" Size="9" />

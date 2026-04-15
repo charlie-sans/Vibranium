@@ -1,62 +1,51 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using FunkyApp;
-using System.Reflection;
-using Vibranium.Core.interfaces;
+using System.Threading.Tasks;
+using Vibranium;
 
-namespace FunkyApp.Core
+namespace Slog
 {
-    public class Konsole : Application
+    public class Konsole : ProcessNode
     {
+        bool _running = true;
+        bool _started = false;
 
-
-
-        string Application.Name
+        void Run()
         {
-            get
+            while (IsRunning)
             {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
+                var Contents = Sys.IO.ReadLine("$: ");
+                if (Contents == null)
+                {
+                    System.Threading.Thread.Sleep(5);
+                    continue;
+                }
+                Sys.IO.WriteLine(Contents);
             }
         }
 
-        string Application.Description
+        public bool IsRunning
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
+            get { return _running; }
         }
 
-        string Application.Version
+        public void Kill()
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
+            _running = false;
         }
 
-        void Application.Init()
-        {
-            throw new NotImplementedException();
-        }
+        public string Name { get {return "sh";} private set{} }
 
-        void Application.Run()
+        public int PID { get; set; }
+
+        public int PPID { get; set; }
+
+        public void Tick()
         {
-            throw new NotImplementedException();
+            if (!_started)
+            {
+                _started = true;
+                Run();
+            }
         }
     }
 }

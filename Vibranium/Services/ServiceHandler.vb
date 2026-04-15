@@ -21,4 +21,9 @@
         Next
         Return Nothing
     End Function
+
+    Sub Tick()
+
+    End Sub
+
 End Class

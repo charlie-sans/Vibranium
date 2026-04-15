@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Notes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Note Project="f5f5a443-1c77-4703-ac10-d2bfca413e48" Date="2026-04-14T22:31:29.4890069+10:00">
-    <Region StartLine="17" EndLine="17" StartColumn="0" EndColumn="20" />
-    <Item>interfaces\Application.cs</Item>
-    <User>charlie</User>
-    <Content>should figure out what to do about this at somepoint in the future.</Content>
-  </Note>
-</Notes>

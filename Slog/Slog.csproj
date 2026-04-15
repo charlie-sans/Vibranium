@@ -52,10 +52,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Vibranium.Core\Vibranium.Core.csproj">
-      <Project>{F5F5A443-1C77-4703-AC10-D2BFCA413E48}</Project>
-      <Name>Vibranium.Core</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Vibranium\Vibranium.vbproj">
       <Project>{583DA2E7-2A32-4D11-B4B2-DB43B6C93728}</Project>
       <Name>Vibranium</Name>

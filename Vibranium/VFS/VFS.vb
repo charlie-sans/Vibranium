@@ -1,5 +1,8 @@
 Imports System.IO
 Imports System.Collections.Generic
+Imports System.Runtime.Serialization
+Imports System.Runtime.Serialization.Json
+Imports System.Text
 
 Public Class VirtualFileSystem
     Private ReadOnly _rootPath As String
@@ -235,4 +238,142 @@ Public Class VirtualFileSystem
             Throw New DirectoryNotFoundException("Directory not found: " & virtualPath)
         End If
     End Sub
+    
+    ' --- VFS metadata: symlinks and permissions ---
+    <DataContract>
+    Private Class VFSMetadata
+        <DataMember>
+        Public Property Symlinks As Dictionary(Of String, String)
+        <DataMember>
+        Public Property Permissions As Dictionary(Of String, PermissionSet)
+
+        Public Sub New()
+            Symlinks = New Dictionary(Of String, String)(StringComparer.OrdinalIgnoreCase)
+            Permissions = New Dictionary(Of String, PermissionSet)(StringComparer.OrdinalIgnoreCase)
+        End Sub
+    End Class
+
+    <DataContract>
+    Public Class PermissionSet
+        <DataMember>
+        Public Property Read As Boolean
+        <DataMember>
+        Public Property Write As Boolean
+        <DataMember>
+        Public Property Execute As Boolean
+
+        Public Sub New()
+        End Sub
+        Public Sub New(r As Boolean, w As Boolean, x As Boolean)
+            Read = r
+            Write = w
+            Execute = x
+        End Sub
+    End Class
+
+    Private _metadata As VFSMetadata = Nothing
+    Private ReadOnly Property MetadataPath As String
+        Get
+            Return Path.Combine(_rootPath, "vfs_metadata.json")
+        End Get
+    End Property
+
+    Private Sub EnsureMetadataLoaded()
+        If _metadata IsNot Nothing Then Return
+        If System.IO.File.Exists(MetadataPath) Then
+            Try
+                Dim ser = New DataContractJsonSerializer(GetType(VFSMetadata))
+                Using fs = System.IO.File.OpenRead(MetadataPath)
+                    _metadata = CType(ser.ReadObject(fs), VFSMetadata)
+                End Using
+            Catch
+                _metadata = New VFSMetadata()
+            End Try
+        Else
+            _metadata = New VFSMetadata()
+        End If
+    End Sub
+
+    Private Sub SaveMetadata()
+        Try
+            Dim ser = New DataContractJsonSerializer(GetType(VFSMetadata))
+            Using fs = System.IO.File.Create(MetadataPath)
+                ser.WriteObject(fs, _metadata)
+            End Using
+        Catch
+        End Try
+    End Sub
+
+    ' Create a symlink in VFS: virtualPath -> (type:value), e.g. type=function,value=Bash or type=path,value=/bin/bash.dll
+    Public Sub CreateSymlink(ByVal virtualPath As String, ByVal linkType As String, ByVal value As String)
+        EnsureMetadataLoaded()
+        Dim key = virtualPath.Replace("\", "/")
+        Dim stored = linkType & ":" & value
+        _metadata.Symlinks(key) = stored
+        SaveMetadata()
+    End Sub
+
+    Public Class SymlinkTarget
+        Public Property Type As String
+        Public Property Value As String
+    End Class
+
+    Public Function ResolveSymlink(ByVal virtualPath As String) As SymlinkTarget
+        EnsureMetadataLoaded()
+        Dim key = virtualPath.Replace("\", "/")
+        If _metadata.Symlinks.ContainsKey(key) Then
+            Dim stored = _metadata.Symlinks(key)
+            Dim idx = stored.IndexOf(":"c)
+            If idx >= 0 Then
+                Dim t = stored.Substring(0, idx)
+                Dim v = stored.Substring(idx + 1)
+                Return New SymlinkTarget() With {.Type = t, .Value = v}
+            Else
+                Return New SymlinkTarget() With {.Type = "path", .Value = stored}
+            End If
+        End If
+        Return Nothing
+    End Function
+
+    ' Expose physical path resolution for other components
+    Public Function MapToPhysical(ByVal virtualPath As String) As String
+        Return GetPhysicalPath(virtualPath)
+    End Function
+
+    ' Permissions management
+    Public Sub SetPermissions(ByVal virtualDir As String, ByVal read As Boolean, ByVal write As Boolean, ByVal execute As Boolean)
+        EnsureMetadataLoaded()
+        Dim dirKey = virtualDir.Replace("\", "/")
+        _metadata.Permissions(dirKey) = New PermissionSet(read, write, execute)
+        SaveMetadata()
+    End Sub
+
+    Public Function GetPermissions(ByVal virtualDir As String) As PermissionSet
+        EnsureMetadataLoaded()
+        Dim dirKey = virtualDir.Replace("\", "/")
+        If _metadata.Permissions.ContainsKey(dirKey) Then
+            Return _metadata.Permissions(dirKey)
+        End If
+        Return New PermissionSet(True, True, True)
+    End Function
+
+    Public Function CheckPermission(ByVal virtualPath As String, ByVal perm As String) As Boolean
+        ' perm: "r", "w", "x"
+        Dim dir = virtualPath.Replace("\", "/")
+        If Not dir.EndsWith("/") Then
+            Dim idx = dir.LastIndexOf("/"c)
+            If idx >= 0 Then dir = dir.Substring(0, idx + 1) Else dir = "/"
+        End If
+        Dim ps = GetPermissions(dir)
+        Select Case perm.ToLower()
+            Case "r"
+                Return ps.Read
+            Case "w"
+                Return ps.Write
+            Case "x"
+                Return ps.Execute
+            Case Else
+                Return False
+        End Select
+    End Function
 End Class

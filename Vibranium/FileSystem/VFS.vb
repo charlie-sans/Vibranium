@@ -10,8 +10,7 @@ Imports System.Collections.Generic
 '   - Generated files (/proc style)
 '   - Executable nodes (/bin/bash style)
 ' ==========================================================
-Namespace Vibranium
-
+Namespace Vibranium.FileSystem
 
     Public Class VirtualFileSystem
 

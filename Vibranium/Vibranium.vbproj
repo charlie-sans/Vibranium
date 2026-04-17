@@ -9,9 +9,10 @@
     </SchemaVersion>
     <ProjectGuid>{583DA2E7-2A32-4D11-B4B2-DB43B6C93728}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>Vibranium.Program</StartupObject>
-    <RootNamespace>Vibranium</RootNamespace>
-    <AssemblyName>FunkyApp</AssemblyName>
+    <StartupObject>Program</StartupObject>
+    <RootNamespace>
+    </RootNamespace>
+    <AssemblyName>Vibranium</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Console</MyType>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
@@ -39,7 +40,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>FunkyApp.xml</DocumentationFile>
+    <DocumentationFile>Vibranium.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
@@ -49,7 +50,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>FunkyApp.xml</DocumentationFile>
+    <DocumentationFile>Vibranium.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -92,6 +93,7 @@
     <Compile Include="FileSystem\FileNode.vb" />
     <Compile Include="FileSystem\GeneratorNode.vb" />
     <Compile Include="FileSystem\VNode.vb" />
+    <Compile Include="Kernel\Environment.vb" />
     <Compile Include="Kernel\IO\Debug.vb" />
     <Compile Include="Kernel\IO\IOSystem.vb" />
     <Compile Include="Kernel\Kernel.vb" />
@@ -174,8 +176,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Throwables\KernelPanic.vb" />
     <Compile Include="Visuals\Startup.vb" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <ProjectExtensions>
     <VisualStudio>

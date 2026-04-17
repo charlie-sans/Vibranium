@@ -1,10 +1,14 @@
-﻿Public Class DeviceNode
-    Inherits VNode
+﻿Namespace Vibranium.FileSystem
 
-    Public Function Read() As String
-        Return ""
-    End Function
+    Public Class DeviceNode
+        Inherits VNode
 
-    Public Sub Write(data As String)
-    End Sub
-End Class
+        Public Function Read() As String
+            Return ""
+        End Function
+
+        Public Sub Write(data As String)
+        End Sub
+    End Class
+
+End Namespace

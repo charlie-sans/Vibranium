@@ -1,34 +1,87 @@
 Imports System.Reflection
 Imports System.IO
-Public Class ProcessManager
-    Dim nextPID As Integer = 1
-    Dim processes As New System.Collections.Generic.Dictionary(Of Integer, ProcessNode)
-    Public ReadOnly Root As ProcessNode
 
-    Public Sub New()
-        Root = New ProcessNode() With {.PID = 0, .Name = "<root>", .PPID = -1}
-        processes(0) = Root
-    End Sub
+Namespace Vibranium.Kernel.ProcessManager
 
-    Public Function CreateProcess(proc As IProcess, Optional parentPID As Integer = 0) As Integer
-        Dim pid = System.Threading.Interlocked.Increment(nextPID) - 1
-        Dim node = New ProcessNode() With {.PID = pid, .PPID = parentPID, .Process = proc, .Name = If(proc IsNot Nothing, proc.Name, "proc-" & pid)}
-        processes(pid) = node
+    Public Class ProcessManager
+        Dim nextPID As Integer = 1
+        Dim processes As New System.Collections.Generic.Dictionary(Of Integer, ProcessNode)
+        Public ReadOnly Root As ProcessNode
 
-        If processes.ContainsKey(parentPID) Then
-            node.Parent = processes(parentPID)
-            processes(parentPID).Children.Add(node)
-        Else
-            node.Parent = Root
-            Root.Children.Add(node)
-        End If
+        Public Sub New()
+            Root = New ProcessNode() With {.PID = 0, .Name = "<root>", .PPID = -1}
+            processes(0) = Root
+        End Sub
 
-        If proc IsNot Nothing Then
-            Try
-                proc.PID = pid
-                proc.PPID = parentPID
-            Catch
-            End Try
+        Public Function CreateProcess(proc As IProcess, Optional parentPID As Integer = 0) As Integer
+            Dim pid = System.Threading.Interlocked.Increment(nextPID) - 1
+            Dim node = New ProcessNode() With {.PID = pid, .PPID = parentPID, .Process = proc, .Name = If(proc IsNot Nothing, proc.Name, "proc-" & pid)}
+            processes(pid) = node
+
+            If processes.ContainsKey(parentPID) Then
+                node.Parent = processes(parentPID)
+                processes(parentPID).Children.Add(node)
+            Else
+                node.Parent = Root
+                Root.Children.Add(node)
+            End If
+
+            If proc IsNot Nothing Then
+                Try
+                    proc.PID = pid
+                    proc.PPID = parentPID
+                Catch
+                End Try
+                ' Start the process on a new thread
+                Dim threadProc As New System.Threading.Thread(Sub()
+                                                                  Try
+                                                                      ' Register thread to PID mapping
+                                                                      Sys.Environment.RegisterThread(pid)
+                                                                      ' Wait for required Sys globals to be initialized
+                                                                      Dim waited As Integer = 0
+                                                                      While (Core.VFS Is Nothing OrElse Core.ProcessManager Is Nothing _
+                                                                          OrElse Core.ServiceHandler Is Nothing OrElse Core.Kernel Is Nothing)
+                                                                          If waited Mod 10 = 0 Then
+                                                                              Console.WriteLine(String.Format("[ProcessManager]: Waiting for Sys globals in process thread for PID={0}...", pid))
+
+                                                                              If Core.VFS Is Nothing Then Console.WriteLine("[ProcessManager]: Sys.VFS is Nothing")
+                                                                              If Core.ProcessManager Is Nothing Then Console.WriteLine("[ProcessManager]: Sys.ProcessManager is Nothing")
+                                                                              If Core.ServiceHandler Is Nothing Then Console.WriteLine("[ProcessManager]: Sys.ServiceHandler is Nothing")
+                                                                              If Core.Kernel Is Nothing Then Console.WriteLine("[ProcessManager]: Sys.Kernel is Nothing")
+                                                                          End If
+                                                                          System.Threading.Thread.Sleep(50)
+                                                                          waited += 1
+                                                                          ' Optional: timeout after 10 seconds
+                                                                          If waited > 200 Then
+                                                                              Console.WriteLine(String.Format("[ProcessManager]: Timeout waiting for Sys globals in process thread for PID={0}. Aborting.", pid))
+                                                                              Sys.Environment.UnregisterThread()
+                                                                              Return
+                                                                          End If
+                                                                      End While
+                                                                      ' Only run Tick loop if all required globals are present
+                                                                      If Core.VFS IsNot Nothing AndAlso Core.ProcessManager IsNot Nothing _
+                                                                          AndAlso Core.ServiceHandler IsNot Nothing AndAlso Core.Kernel IsNot Nothing Then
+                                                                          While proc.IsRunning
+                                                                              Try
+                                                                                  proc.Tick()
+                                                                              Catch exTick As Exception
+                                                                                  Console.WriteLine(String.Format("[ProcessManager]: Exception in proc.Tick for PID={0}: {1}", pid, exTick.Message))
+                                                                                  Console.WriteLine("[ProcessManager]: StackTrace: " & exTick.ToString())
+                                                                                  Exit While
+                                                                              End Try
+                                                                          End While
+                                                                      Else
+                                                                          Console.WriteLine(String.Format("[ProcessManager]: Aborting process thread for PID={0} due to missing globals.", pid))
+                                                                      End If
+                                                                  Catch ex As Exception
+                                                                      Console.WriteLine(String.Format("[ProcessManager]: Exception in process thread for PID={0}: {1}", pid, ex.Message))
+                                                                      Console.WriteLine("[ProcessManager]: StackTrace: " & ex.ToString())
+                                                                  Finally
+                                                                      Sys.Environment.UnregisterThread()
+                                                                  End Try
+                                                              End Sub)
+            threadProc.IsBackground = True
+            threadProc.Start()
         End If
 
         Return pid
@@ -121,7 +174,8 @@ Public Class ProcessManager
     End Function
 
     Sub StartProcessFromVFS(p1 As String)
-        Throw New NotImplementedException
+        Throw New NotImplementedException()
     End Sub
 
 End Class
+End Namespace

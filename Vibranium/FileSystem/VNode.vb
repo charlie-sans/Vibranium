@@ -1,44 +1,48 @@
-﻿Public MustInherit Class VNode
+﻿Namespace Vibranium.FileSystem
 
-    Private _p As String
+    Public MustInherit Class VNode
 
-    Protected Sub New(p As String)
-        _p = p
-    End Sub
-    Protected Sub New()
+        Private _p As String
 
-    End Sub
-    Public Property Name As String
-    Public Property Parent As DirectoryNode
+        Protected Sub New(p As String)
+            _p = p
+        End Sub
+        Protected Sub New()
 
-    Public Overridable ReadOnly Property FullPath As String
-        Get
-            If Parent Is Nothing Then Return "/"
-            Return Parent.FullPath.TrimEnd("/"c) & "/" & Name
-        End Get
-    End Property
+        End Sub
+        Public Property Name As String
+        Public Property Parent As DirectoryNode
 
-    Public Overridable Function CanRead() As Boolean
-        Return False
-    End Function
+        Public Overridable ReadOnly Property FullPath As String
+            Get
+                If Parent Is Nothing Then Return "/"
+                Return Parent.FullPath.TrimEnd("/"c) & "/" & Name
+            End Get
+        End Property
 
-    Public Overridable Function CanWrite() As Boolean
-        Return False
-    End Function
+        Public Overridable Function CanRead() As Boolean
+            Return False
+        End Function
 
-    Public Overridable Function CanExecute() As Boolean
-        Return False
-    End Function
+        Public Overridable Function CanWrite() As Boolean
+            Return False
+        End Function
 
-    Public Overridable Function ReadText() As String
-        Throw New Exception("Node is not readable.")
-    End Function
+        Public Overridable Function CanExecute() As Boolean
+            Return False
+        End Function
 
-    Public Overridable Sub WriteText(ByVal content As String)
-        Throw New Exception("Node is not writable.")
-    End Sub
+        Public Overridable Function ReadText() As String
+            Throw New Exception("Node is not readable.")
+        End Function
 
-    Public Overridable Sub Execute(ByVal args As String())
-        Throw New Exception("Node is not executable.")
-    End Sub
-End Class
+        Public Overridable Sub WriteText(ByVal content As String)
+            Throw New Exception("Node is not writable.")
+        End Sub
+
+        Public Overridable Sub Execute(ByVal args As String())
+            Throw New Exception("Node is not executable.")
+        End Sub
+    End Class
+
+End Namespace

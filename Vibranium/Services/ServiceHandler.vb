@@ -1,29 +1,32 @@
-﻿Public Class ServiceHandler
+﻿Namespace Vibranium.Services
 
-    Dim Services As List(Of Service) = New List(Of Service)
+    Public Class ServiceHandler
 
-    Public Sub Init()
-        For Each SV As Service In Services
-            SV.Init()
-        Next
-    End Sub
+        Dim Services As List(Of Service) = New List(Of Service)
 
-    Public Sub AddService(ByVal Srv As Service)
-        Services.Add(Srv)
-    End Sub
+        Public Sub Init()
+            For Each SV As Service In Services
+                SV.Init()
+            Next
+        End Sub
+
+        Public Sub AddService(ByVal Srv As Service)
+            Services.Add(Srv)
+        End Sub
 
 
-    Public Function FindService(ByVal name As String)
-        For Each Service In Services
-            If Service.Name = name Then
-                Return Service
-            End If
-        Next
-        Return Nothing
-    End Function
+        Public Function FindService(ByVal name As String)
+            For Each Service In Services
+                If Service.Name = name Then
+                    Return Service
+                End If
+            Next
+            Return Nothing
+        End Function
 
-    Sub Tick()
+        Sub Tick()
 
-    End Sub
+        End Sub
 
-End Class
+    End Class
+End Namespace

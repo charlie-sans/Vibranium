@@ -1,21 +1,25 @@
 ﻿Imports System.IO
 
-Public Class FileNode
-    Inherits VNode
+Namespace Vibranium.FileSystem
 
-    Private ReadOnly _physical As String
+    Public Class FileNode
+        Inherits VNode
 
-    Public Sub New(ByVal vPath As String, ByVal physical As String)
-        MyBase.New(vPath)
-        _physical = physical
-    End Sub
+        Private ReadOnly _physical As String
 
-    Public Overrides Function ReadText() As String
-        Return File.ReadAllText(_physical)
-    End Function
+        Public Sub New(ByVal vPath As String, ByVal physical As String)
+            MyBase.New(vPath)
+            _physical = physical
+        End Sub
 
-    Public Overrides Sub WriteText(ByVal content As String)
-        File.WriteAllText(_physical, content)
-    End Sub
+        Public Overrides Function ReadText() As String
+            Return File.ReadAllText(_physical)
+        End Function
 
-End Class
+        Public Overrides Sub WriteText(ByVal content As String)
+            File.WriteAllText(_physical, content)
+        End Sub
+
+    End Class
+
+End Namespace

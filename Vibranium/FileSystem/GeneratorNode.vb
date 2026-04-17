@@ -1,14 +1,18 @@
-﻿Public Class VGeneratedNode
-    Inherits VNode
+﻿Namespace Vibranium.FileSystem
 
-    Private ReadOnly _generator As Func(Of String)
+    Public Class VGeneratedNode
+        Inherits VNode
 
-    Public Sub New(ByVal p As String, ByVal gen As Func(Of String))
-        MyBase.New(p)
-        _generator = gen
-    End Sub
+        Private ReadOnly _generator As Func(Of String)
 
-    Public Overrides Function ReadText() As String
-        Return _generator()
-    End Function
-End Class
+        Public Sub New(ByVal p As String, ByVal gen As Func(Of String))
+            MyBase.New(p)
+            _generator = gen
+        End Sub
+
+        Public Overrides Function ReadText() As String
+            Return _generator()
+        End Function
+    End Class
+
+End Namespace

@@ -1,58 +1,62 @@
-﻿//using System;
-//using System.Threading.Tasks;
-//using Vibranium;
+﻿
+using System.Threading.Tasks;
+using Vibranium;
+using Vibranium.Sys;
+using Vibranium.Kernel;
+namespace Slog
+{
+    public class Konsole : ProcessNode
+    {
+        bool _running = true;
+        bool _started = false;
 
-//namespace Slog
-//{
-//    public class Konsole : ProcessNode
-//    {
-//        bool _running = true;
-//        bool _started = false;
+        void Run()
+        {
+            Vibranium.Sys.Environment.RegisterThread(PID);
+            while (IsRunning)
+            {
+                IO.SetConsoleColor(System.ConsoleColor.Green);
+                string Contents = IO.ReadLine("@: ");
+                IO.SetConsoleColor(System.ConsoleColor.White);
+                if (Contents == null)
+                {
+                    System.Threading.Thread.Sleep(5);
 
-//        void Run()
-//        {
-//            Vibranium.Sys.Environment.RegisterThread(PID);
-//            while (IsRunning)
-//            {
-//                var Contents = Sys.IO.ReadLine("$: ");
-//                if (Contents == null)
-//                {
-//                    System.Threading.Thread.Sleep(5);
-//                    continue;
-//                }
-//                //if (Contents.Trim() == "exit")
-//                //{
-//                //    Vibranium.Environment.ExitCurrentProcess();
-//                //    break;
-//                //}
-//                Sys.IO.WriteLine(Contents);
-//            }
-//        }
+                    continue;
+                }
+                if (Contents.Trim() == "exit")
+                {
+                    Environment.ExitCurrentProcess();
+                    break;
+                }
+                IO.WriteLine(Contents);
+            }
+        }
 
-//        public bool IsRunning
-//        {
-//            get { return _running; }
-//        }
+        public bool IsRunning
+        {
+            get { return _running; }
+        }
 
-//        public void Kill()
-//        {
-//            _running = false;
-//            Vibranium.Environment.UnregisterThread();
-//        }
+        public void Kill()
+        {
+            _running = false;
+           Environment.UnregisterThread();
+        }
 
-//        public string Name { get {return "sh";} private set{} }
+        public string Name { get { return "Konsole"; } private set { } }
 
-//        public int PID { get; set; }
+        public int PID { get; set; }
 
-//        public int PPID { get; set; }
+        public int PPID { get; set; }
 
-//        public void Tick()
-//        {
-//            if (!_started)
-//            {
-//                _started = true;
-//                Run();
-//            }
-//        }
-//    }
-//}
+        public void Tick()
+        {
+            if (!_started)
+            {
+                _started = true;
+                Run();
+            }
+        }
+    }
+}

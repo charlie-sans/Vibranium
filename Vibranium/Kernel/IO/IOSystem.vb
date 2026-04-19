@@ -6,11 +6,11 @@ Namespace Vibranium.Kernel
         Dim Input As TextReader = Console.In
         Dim Out As TextWriter = Console.Out
 
-        Public Function Read(Optional ByVal chars As String = "")
+        Public Function Read(Optional ByVal chars As String = "") As String
             Out.Write(chars)
             Return Input.Read()
         End Function
-        Public Function ReadLine(Optional ByVal chars As String = "")
+        Public Function ReadLine(Optional ByVal chars As String = "") As String
             Out.Write(chars)
             Return Input.ReadLine()
         End Function

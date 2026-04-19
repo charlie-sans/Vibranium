@@ -36,14 +36,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Vibranium.FileSystem.VirtualFileSystem" Collapsed="true">
-    <Position X="13.75" Y="2.5" Width="1.5" />
-    <NestedTypes>
-      <Class Name="Vibranium.FileSystem.VirtualFileSystem.SymlinkTarget" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>FileSystem\VFS.vb</NewMemberFileName>
-        </TypeIdentifier>
-      </Class>
-    </NestedTypes>
+    <Position X="17.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAkAAAACAQEQAASAAAAgAoAAAAAAAAQAAAoEQBEA=</HashCode>
       <FileName>FileSystem\VFS.vb</FileName>
@@ -57,21 +50,21 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Vibranium.Kernel.Kernel" Collapsed="true">
-    <Position X="13.75" Y="0.5" Width="1.5" />
+    <Position X="15.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAIAAACAAAAAAA=</HashCode>
       <FileName>Kernel\Kernel.vb</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ProcessNode" Collapsed="true">
-    <Position X="13.75" Y="1.5" Width="1.5" />
+    <Position X="17.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAEAAAAAAAgAERAQAAAAAAAAAAAAAAACAQAA=</HashCode>
       <FileName>Kernel\ProcessManager\ProcessNode.vb</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ProgramRegistry" Collapsed="true">
-    <Position X="15.5" Y="1.5" Width="1.5" />
+    <Position X="12" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAEAAAAAAAQAIAAAAAAAAAAAAABAAAAQAAAAAAAAAA=</HashCode>
       <FileName>Kernel\ProcessManager\ProgramRegistry.vb</FileName>
@@ -84,50 +77,64 @@
       <FileName>Templates\AboutBox1.vb</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="InvalidApplicationException" Collapsed="true">
+    <Position X="13.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Throwables\InvalidApplication.vb</FileName>
+    </TypeIdentifier>
+  </Class>
   <Class Name="KernelPanic" Collapsed="true">
-    <Position X="15.5" Y="0.5" Width="1.5" />
+    <Position X="17.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Throwables\KernelPanic.vb</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="ProcessLoadException" Collapsed="true">
+    <Position X="13.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Throwables\ProcessLoadException.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Apps.ShProcess" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="15.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAAAAAAAAAARAQAAAAAAAAAAAAAAACAQAA=</HashCode>
+      <FileName>Kernel\ProcessManager\BuiltIns\Sh.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Vibranium.Services.ServiceHandler" Collapsed="true">
+    <Position X="13.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACACAAQAA=</HashCode>
+      <FileName>Services\ServiceHandler.vb</FileName>
+    </TypeIdentifier>
+  </Class>
   <Class Name="Vibranium.Kernel.ProcessManager.ProcessManager" Collapsed="true">
-    <Position X="12" Y="1.5" Width="1.5" />
+    <Position X="15.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>QAAAAAAAAAAAACAUAAAAAAAAAAEAACAAAAAgAAAIQAA=</HashCode>
       <FileName>Kernel\ProcessManager\ProcessManager.vb</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="My.MySettings" Collapsed="true">
-    <Position X="17.25" Y="0.5" Width="1.5" />
+    <Position X="12" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
-  <Class Name="Vibranium.Services.ServiceHandler" Collapsed="true">
-    <Position X="17.25" Y="1.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>gEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACACAAQAA=</HashCode>
-      <FileName>Services\ServiceHandler.vb</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Vibranium.Services.ShProcess" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="12" Y="2.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAEAAAAAAAAAARAQAAAAAAAAAAAAAAACAQAA=</HashCode>
-      <FileName>Services\Sh.vb</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
   <Interface Name="IProcess" Collapsed="true">
-    <Position X="12" Y="6" Width="1.5" />
+    <Position X="12" Y="7" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAEAAAAAAAAAARAQAAAAAAAAAAAAAAACAQAA=</HashCode>
       <FileName>Kernel\ProcessManager\IProcess.vb</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Service" Collapsed="true">
-    <Position X="13.75" Y="6" Width="1.5" />
+    <Position X="13.75" Y="7" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAAAAAAAAAAAAQAAEAAAAAAQAACABAAAAA=</HashCode>
       <FileName>Templates\Service.vb</FileName>
@@ -143,7 +150,7 @@
   <Module Name="Vibranium.Core" Collapsed="true">
     <Position X="12" Y="3.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AgAAAAAAAAAAAEAAAAAAAAQAAAAAAAAAAAAAAgAAAAA=</HashCode>
+      <HashCode>AgAAAAAAAAAAAEAIAAAAAAQAAAAAAAAAAAAAAgAAAAA=</HashCode>
       <FileName>Kernel\GlobalCode.vb</FileName>
     </TypeIdentifier>
   </Module>
@@ -161,6 +168,13 @@
       <FileName>Kernel\IO\IOSystem.vb</FileName>
     </TypeIdentifier>
   </Module>
+  <Module Name="RegisterBuiltins" Collapsed="true">
+    <Position X="15.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Kernel\ProcessManager\BuiltIns\RegisterBuiltins.vb</FileName>
+    </TypeIdentifier>
+  </Module>
   <Module Name="Program" Collapsed="true">
     <Position X="13.75" Y="4.75" Width="1.5" />
     <TypeIdentifier>
@@ -169,14 +183,14 @@
     </TypeIdentifier>
   </Module>
   <Module Name="Startup" Collapsed="true">
-    <Position X="17.25" Y="4.75" Width="1.5" />
+    <Position X="12" Y="5.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AgAAAAAAAAAAAEAAAAAAAAQAAAAAIAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAEAAAAAAAAAAAAAAIAAAAAAAAAAAAAA=</HashCode>
       <FileName>Visuals\Startup.vb</FileName>
     </TypeIdentifier>
   </Module>
   <Module Name="My.Resources.Resources" Collapsed="true">
-    <Position X="15.5" Y="4.75" Width="1.5" />
+    <Position X="17.25" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
     </TypeIdentifier>

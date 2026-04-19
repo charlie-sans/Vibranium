@@ -17,6 +17,7 @@
     <MyType>Console</MyType>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -29,7 +30,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -65,6 +65,9 @@
   <PropertyGroup>
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -97,6 +100,9 @@
     <Compile Include="Kernel\IO\Debug.vb" />
     <Compile Include="Kernel\IO\IOSystem.vb" />
     <Compile Include="Kernel\Kernel.vb" />
+    <Compile Include="Kernel\ProcessManager\Application.vb" />
+    <Compile Include="Kernel\ProcessManager\BuiltIns\About.vb" />
+    <Compile Include="Kernel\ProcessManager\BuiltIns\RegisterBuiltins.vb" />
     <Compile Include="Kernel\ProcessManager\ProcessManager.vb" />
     <Compile Include="Kernel\ProcessManager\ProcessNode.vb" />
     <Compile Include="Kernel\ProcessManager\ProgramRegistry.vb" />
@@ -116,7 +122,13 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Services\Sh.vb" />
+    <Compile Include="Kernel\ProcessManager\BuiltIns\Sh.vb" />
+    <Compile Include="Templates\About.Designer.vb">
+      <DependentUpon>About.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Templates\About.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Templates\AboutBox1.Designer.vb">
       <DependentUpon>AboutBox1.vb</DependentUpon>
     </Compile>
@@ -135,6 +147,9 @@
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\About.resx">
+      <DependentUpon>About.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Templates\AboutBox1.resx">
       <DependentUpon>AboutBox1.vb</DependentUpon>
@@ -176,10 +191,14 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Throwables\ProcessLoadException.vb" />
+    <Compile Include="Throwables\InvalidApplication.vb" />
     <Compile Include="Throwables\KernelPanic.vb" />
     <Compile Include="Visuals\Startup.vb" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Icon.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <ProjectExtensions>
     <VisualStudio>

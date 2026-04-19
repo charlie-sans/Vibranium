@@ -24,14 +24,15 @@ Module Program
             Vibranium.Core.ProcessManager = ProcessManager
         Catch
         End Try
-        ' Register shell process if needed (update as appropriate)
-        ' VFS.RegisterProcess("sh", Function(vpath) New ShProcess(), "/bin/sh")
-        Debug.Log("registered SH to /bin/sh" + vbNewLine)
+       
 
         ' launch Services
         ServiceHandler.Init()
 
-        ' assume that our built-in terminal is going to get replaced.
+
+
+        ' assume that our built-in terminal is going to get replaced at somepoint too tbf.
+        Apps.RegisterBuiltins.Startup()
         Kernel.Init()
 
         ' run Kernel loop

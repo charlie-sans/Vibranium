@@ -58,18 +58,31 @@ Namespace Vibranium.Kernel.ProcessManager
                                                                               Return
                                                                           End If
                                                                       End While
-                                                                      ' Only run Tick loop if all required globals are present
+                                                                      ' Only run Start + Tick loop if all required globals are present
                                                                       If Core.VFS IsNot Nothing AndAlso Core.ProcessManager IsNot Nothing _
                                                                           AndAlso Core.ServiceHandler IsNot Nothing AndAlso Core.Kernel IsNot Nothing Then
-                                                                          While proc.IsRunning
+                                                                          Try
+                                                                              ' Call one-time startup hook
                                                                               Try
-                                                                                  proc.Tick()
-                                                                              Catch exTick As Exception
-                                                                                  Console.WriteLine(String.Format("[ProcessManager]: Exception in proc.Tick for PID={0}: {1}", pid, exTick.Message))
-                                                                                  Console.WriteLine("[ProcessManager]: StackTrace: " & exTick.ToString())
-                                                                                  Exit While
+                                                                                  proc.Start()
+                                                                              Catch exStart As Exception
+                                                                                  Console.WriteLine(String.Format("[ProcessManager]: Exception in proc.Start for PID={0}: {1}", pid, exStart.Message))
+                                                                                  Console.WriteLine("[ProcessManager]: StackTrace: " & exStart.ToString())
                                                                               End Try
-                                                                          End While
+
+                                                                              ' If the process remains running, enter the Tick loop (for interactive/long-lived processes)
+                                                                              While proc.IsRunning
+                                                                                  Try
+                                                                                      proc.Tick()
+                                                                                  Catch exTick As Exception
+                                                                                      Console.WriteLine(String.Format("[ProcessManager]: Exception in proc.Tick for PID={0}: {1}", pid, exTick.Message))
+                                                                                      Console.WriteLine("[ProcessManager]: StackTrace: " & exTick.ToString())
+                                                                                      Exit While
+                                                                                  End Try
+                                                                              End While
+                                                                          Catch
+                                                                              Console.WriteLine(String.Format("[ProcessManager]: Aborting process thread for PID={0} due to missing globals.", pid))
+                                                                          End Try
                                                                       Else
                                                                           Console.WriteLine(String.Format("[ProcessManager]: Aborting process thread for PID={0} due to missing globals.", pid))
                                                                       End If

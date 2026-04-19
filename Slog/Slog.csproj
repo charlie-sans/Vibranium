@@ -57,7 +57,9 @@
       <Name>Vibranium</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="GUI\AboutBox1.resx">
       <DependentUpon>AboutBox1.cs</DependentUpon>

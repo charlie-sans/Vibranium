@@ -1,5 +1,5 @@
-﻿Imports Vibranium.Kernel
-Namespace Vibranium.Services
+﻿Imports Vibranium.Kernel, Vibranium, Vibranium.Sys
+Namespace Apps
 
     Public Class ShProcess
         Implements IProcess
@@ -15,15 +15,16 @@ Namespace Vibranium.Services
 
         Public Sub Tick() Implements IProcess.Tick
             ' Register thread to PID mapping
-            Sys.Environment.RegisterThread(PID)
+            Vibranium.Sys.Environment.RegisterThread(PID)
             Try
                 Dim CMD = IO.ReadLine("$: ")
                 Dim args As String() = Split(CMD, " ")
                 Try
                     Select Case Trim(CMD)
                         Case "exit"
-                            Sys.Environment.ExitCurrentProcess()
-
+                            Vibranium.Sys.Environment.ExitCurrentProcess()
+                        Case "about"
+                            ProcessManager.StartByPath(VFS, "/bin/about")
                         Case Else
                             IO.WriteLine("Invalid input")
                     End Select
@@ -34,9 +35,13 @@ Namespace Vibranium.Services
             End Try
         End Sub
 
+        Public Sub Start() Implements IProcess.Start
+            ' No-op start for interactive shell; Tick will handle the interactive loop.
+        End Sub
+
         Public Sub Kill() Implements IProcess.Kill
             IsRunning = False
-            Sys.Environment.UnregisterThread()
+            Vibranium.Sys.Environment.UnregisterThread()
         End Sub
 
     End Class

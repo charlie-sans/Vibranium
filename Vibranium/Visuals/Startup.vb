@@ -17,7 +17,7 @@ Public Module Startup
         End Try
 
         If Core.ProcessManager Is Nothing Then
-            Core.ProcessManager = New Vibranium.Kernel.ProcessManager.ProcessManager()
+            Core.ProcessManager = New Vibranium.Kernel.ProcessManager()
             Debug.Log(LogLevel.Warning, "Core.Process manager was null!")
         End If
         If Core.ServiceHandler Is Nothing Then Core.ServiceHandler = New Vibranium.Services.ServiceHandler()
@@ -27,7 +27,7 @@ Public Module Startup
         End Try
         If Core.ProcessManager Is Nothing Then
 
-            Core.ProcessManager = New Vibranium.Kernel.ProcessManager.ProcessManager()
+            Core.ProcessManager = New Vibranium.Kernel.ProcessManager()
 
             IO.WriteLine("started Processmanager")
             IO.WriteLine()

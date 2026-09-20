@@ -15,8 +15,9 @@
     <AssemblyName>Vibranium</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Console</MyType>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
@@ -42,6 +43,7 @@
     <OutputPath>bin\Debug\</OutputPath>
     <DocumentationFile>Vibranium.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -52,6 +54,7 @@
     <OutputPath>bin\Release\</OutputPath>
     <DocumentationFile>Vibranium.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <OptionExplicit>On</OptionExplicit>
@@ -100,17 +103,18 @@
     <Compile Include="Kernel\IO\Debug.vb" />
     <Compile Include="Kernel\IO\IOSystem.vb" />
     <Compile Include="Kernel\Kernel.vb" />
-    <Compile Include="Kernel\ProcessManager\Application.vb" />
-    <Compile Include="Kernel\ProcessManager\BuiltIns\About.vb" />
-    <Compile Include="Kernel\ProcessManager\BuiltIns\RegisterBuiltins.vb" />
-    <Compile Include="Kernel\ProcessManager\ProcessManager.vb" />
-    <Compile Include="Kernel\ProcessManager\ProcessNode.vb" />
-    <Compile Include="Kernel\ProcessManager\ProgramRegistry.vb" />
+    <Compile Include="Kernel\Processes\Application.vb" />
+    <Compile Include="Kernel\Processes\BuiltIns\About.vb" />
+    <Compile Include="Kernel\Processes\BuiltIns\RegisterBuiltins.vb" />
+    <Compile Include="Kernel\Processes\ProcessManager.vb" />
+    <Compile Include="Kernel\Processes\ProcessNode.vb" />
+    <Compile Include="Kernel\Processes\ProgramRegistry.vb" />
     <Compile Include="Program.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -122,7 +126,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Kernel\ProcessManager\BuiltIns\Sh.vb" />
+    <Compile Include="Kernel\Processes\BuiltIns\Sh.vb" />
     <Compile Include="Templates\About.Designer.vb">
       <DependentUpon>About.vb</DependentUpon>
     </Compile>
@@ -136,7 +140,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Services\ServiceHandler.vb" />
-    <Compile Include="Kernel\ProcessManager\IProcess.vb" />
+    <Compile Include="Kernel\Processes\IProcess.vb" />
     <Compile Include="Templates\Service.vb" />
     <Compile Include="Kernel\GlobalCode.vb" />
     <Compile Include="FileSystem\VFS.vb" />
@@ -156,6 +160,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="ClassDiagram1.cd" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>

@@ -4,8 +4,34 @@ Imports System.Threading.Tasks
 
 Namespace Vibranium.Kernel
     Public Class Kernel
+        Public Kernel As Vibranium.Kernel.Kernel
+        Public ServiceHandler As Vibranium.Services.ServiceHandler
+
+        Public VFS As Vibranium.FileSystem.VirtualFileSystem
+        'Public ProcessManager As Vibranium.
         Dim Running As Boolean = True
         Public Function Init() As Boolean
+
+
+            ' instance core services
+
+            ServiceHandler = New Vibranium.Services.ServiceHandler()
+
+            VFS = New Vibranium.FileSystem.VirtualFileSystem()
+            'ProcessManager = New ProcessManager()
+            ' Ensure the shared Core module has the same runtime instances
+            Try
+                Vibranium.Core.VFS = VFS
+                Vibranium.Core.ServiceHandler = ServiceHandler
+                Vibranium.Core.ProcessManager = New Vibranium.Kernel.ProcessManager()
+            Catch
+            End Try
+
+            ' assume that our built-in terminal is going to get replaced at somepoint too tbf.
+            Apps.RegisterBuiltins.Startup()
+            ' launch Services
+            ServiceHandler.Init()
+            Apps.RegisterBuiltins.StartApp("/bin/sh")
             Startup.Startup()
             Return True
         End Function

@@ -1,7 +1,7 @@
 Imports System.Reflection
 Imports System.IO
-
-Namespace Vibranium.Kernel.ProcessManager
+Imports Vibranium
+Namespace Kernel
 
     Public Class ProcessManager
         Dim nextPID As Integer = 1
@@ -32,6 +32,21 @@ Namespace Vibranium.Kernel.ProcessManager
                     proc.PPID = parentPID
                 Catch
                 End Try
+
+                ' Determine whether the Start method or the type requests STA
+                Dim needsSTA As Boolean = False
+                Try
+                    Dim pType = proc.GetType()
+                    Dim mStart = pType.GetMethod("Start", Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic)
+                    If mStart IsNot Nothing Then
+                        needsSTA = Attribute.IsDefined(mStart, GetType(STAThreadAttribute))
+                    End If
+                    If Not needsSTA Then
+                        needsSTA = Attribute.IsDefined(pType, GetType(STAThreadAttribute))
+                    End If
+                Catch
+                End Try
+
                 ' Start the process on a new thread
                 Dim threadProc As New System.Threading.Thread(Sub()
                                                                   Try
@@ -93,82 +108,53 @@ Namespace Vibranium.Kernel.ProcessManager
                                                                       Sys.Environment.UnregisterThread()
                                                                   End Try
                                                               End Sub)
-            threadProc.IsBackground = True
-            threadProc.Start()
-        End If
-
-        Return pid
-    End Function
-
-    Public Sub KillProcess(pid As Integer)
-        If processes.ContainsKey(pid) Then
-            processes(pid).Kill()
-        End If
-    End Sub
-
-    Public Sub Tick()
-        Root.Tick()
-    End Sub
-
-    Public Function GetProcess(pid As Integer) As ProcessNode
-        If processes.ContainsKey(pid) Then Return processes(pid)
-        Return Nothing
-    End Function
-
-    ' Start a process by VFS path. Resolves symlinks via VFS metadata. If symlink -> function, use ProgramRegistry.
-    ' If target is a DLL, attempts to load the assembly and instantiate a type implementing IProcess.
-    Public Function StartByPath(ByVal vfs As Object, ByVal virtualPath As String, Optional ByVal parentPID As Integer = 0) As Integer
-        Try
-            If vfs Is Nothing Then Return -1
-
-            ' Try resolve symlink first
-            Dim symlinkTarget = Nothing
-            Try
-                symlinkTarget = CallByName(vfs, "ResolveSymlink", Microsoft.VisualBasic.CallType.Method, virtualPath)
-            Catch
-                symlinkTarget = Nothing
-            End Try
-
-            If symlinkTarget IsNot Nothing Then
-                Dim tType = CallByName(symlinkTarget, "Type", Microsoft.VisualBasic.CallType.Get)
-                Dim tVal = CallByName(symlinkTarget, "Value", Microsoft.VisualBasic.CallType.Get)
-                If String.Equals(CStr(tType), "function", StringComparison.OrdinalIgnoreCase) OrElse String.Equals(CStr(tType), "func", StringComparison.OrdinalIgnoreCase) Then
-                    Dim proc = ProgramRegistry.Instance.CreateByName(CStr(tVal), virtualPath)
-                    If proc IsNot Nothing Then
-                        Try
-                            proc.IsRunning = True
-                        Catch
-                        End Try
-                        Return CreateProcess(proc, parentPID)
-                    End If
-                    Return -1
-                ElseIf String.Equals(CStr(tType), "path", StringComparison.OrdinalIgnoreCase) Then
-                    virtualPath = CStr(tVal)
+                threadProc.IsBackground = True
+                If needsSTA Then
+                    Try
+                        threadProc.SetApartmentState(System.Threading.ApartmentState.STA)
+                    Catch
+                    End Try
                 End If
+                threadProc.Start()
             End If
 
-            ' If path points to a dll, attempt to load assembly and find IProcess
-            Dim isFile = False
+            Return pid
+        End Function
+
+        Public Sub KillProcess(pid As Integer)
+            If processes.ContainsKey(pid) Then
+                processes(pid).Kill()
+            End If
+        End Sub
+
+        Public Sub Tick()
+            Root.Tick()
+        End Sub
+
+        Public Function GetProcess(pid As Integer) As ProcessNode
+            If processes.ContainsKey(pid) Then Return processes(pid)
+            Return Nothing
+        End Function
+
+        ' Start a process by VFS path. Resolves symlinks via VFS metadata. If symlink -> function, use ProgramRegistry.
+        ' If target is a DLL, attempts to load the assembly and instantiate a type implementing IProcess.
+        Public Function StartByPath(ByVal vfs As Object, ByVal virtualPath As String, Optional ByVal parentPID As Integer = 0) As Integer
             Try
-                isFile = CallByName(vfs, "IsFile", Microsoft.VisualBasic.CallType.Method, virtualPath)
-            Catch
-                isFile = False
-            End Try
+                If vfs Is Nothing Then Return -1
 
-            If Not isFile Then
-                Return -1
-            End If
+                ' Try resolve symlink first
+                Dim symlinkTarget = Nothing
+                Try
+                    symlinkTarget = CallByName(vfs, "ResolveSymlink", Microsoft.VisualBasic.CallType.Method, virtualPath)
+                Catch
+                    symlinkTarget = Nothing
+                End Try
 
-            Dim physicalPath = CStr(CallByName(vfs, "MapToPhysical", Microsoft.VisualBasic.CallType.Method, virtualPath))
-            If String.IsNullOrEmpty(physicalPath) Then Return -1
-
-            Dim ext = Path.GetExtension(physicalPath)
-            If String.Equals(ext, ".dll", StringComparison.OrdinalIgnoreCase) Then
-                Dim asm = Assembly.LoadFrom(physicalPath)
-                For Each t In asm.GetTypes()
-                    If Not t.IsAbstract AndAlso GetType(IProcess).IsAssignableFrom(t) Then
-                        Dim obj = Activator.CreateInstance(t)
-                        Dim proc = TryCast(obj, IProcess)
+                If symlinkTarget IsNot Nothing Then
+                    Dim tType = CallByName(symlinkTarget, "Type", Microsoft.VisualBasic.CallType.Get)
+                    Dim tVal = CallByName(symlinkTarget, "Value", Microsoft.VisualBasic.CallType.Get)
+                    If String.Equals(CStr(tType), "function", StringComparison.OrdinalIgnoreCase) OrElse String.Equals(CStr(tType), "func", StringComparison.OrdinalIgnoreCase) Then
+                        Dim proc = ProgramRegistry.Instance.CreateByName(CStr(tVal), virtualPath)
                         If proc IsNot Nothing Then
                             Try
                                 proc.IsRunning = True
@@ -176,19 +162,54 @@ Namespace Vibranium.Kernel.ProcessManager
                             End Try
                             Return CreateProcess(proc, parentPID)
                         End If
+                        Return -1
+                    ElseIf String.Equals(CStr(tType), "path", StringComparison.OrdinalIgnoreCase) Then
+                        virtualPath = CStr(tVal)
                     End If
-                Next
-            End If
+                End If
 
-            Return -1
-        Catch
-            Return -1
-        End Try
-    End Function
+                ' If path points to a dll, attempt to load assembly and find IProcess
+                Dim isFile = False
+                Try
+                    isFile = CallByName(vfs, "IsFile", Microsoft.VisualBasic.CallType.Method, virtualPath)
+                Catch
+                    isFile = False
+                End Try
 
-    Sub StartProcessFromVFS(p1 As String)
-        Throw New NotImplementedException()
-    End Sub
+                If Not isFile Then
+                    Return -1
+                End If
 
-End Class
+                Dim physicalPath = CStr(CallByName(vfs, "MapToPhysical", Microsoft.VisualBasic.CallType.Method, virtualPath))
+                If String.IsNullOrEmpty(physicalPath) Then Return -1
+
+                Dim ext = Path.GetExtension(physicalPath)
+                If String.Equals(ext, ".dll", StringComparison.OrdinalIgnoreCase) Then
+                    Dim asm = Assembly.LoadFrom(physicalPath)
+                    For Each t In asm.GetTypes()
+                        If Not t.IsAbstract AndAlso GetType(IProcess).IsAssignableFrom(t) Then
+                            Dim obj = Activator.CreateInstance(t)
+                            Dim proc = TryCast(obj, IProcess)
+                            If proc IsNot Nothing Then
+                                Try
+                                    proc.IsRunning = True
+                                Catch
+                                End Try
+                                Return CreateProcess(proc, parentPID)
+                            End If
+                        End If
+                    Next
+                End If
+
+                Return -1
+            Catch
+                Return -1
+            End Try
+        End Function
+
+        Sub StartProcessFromVFS(p1 As String)
+            Throw New NotImplementedException()
+        End Sub
+
+    End Class
 End Namespace

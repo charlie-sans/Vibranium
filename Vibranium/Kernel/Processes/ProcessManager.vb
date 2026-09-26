@@ -1,7 +1,7 @@
 Imports System.Reflection
 Imports System.IO
 Imports Vibranium
-Namespace Kernel
+Namespace Vibranium
 
     Public Class ProcessManager
         Dim nextPID As Integer = 1
@@ -13,7 +13,7 @@ Namespace Kernel
             processes(0) = Root
         End Sub
 
-        Public Function CreateProcess(proc As IProcess, Optional parentPID As Integer = 0) As Integer
+        Public Function CreateProcess(ByVal proc As IProcess, Optional ByVal parentPID As Integer = 0) As Integer
             Dim pid = System.Threading.Interlocked.Increment(nextPID) - 1
             Dim node = New ProcessNode() With {.PID = pid, .PPID = parentPID, .Process = proc, .Name = If(proc IsNot Nothing, proc.Name, "proc-" & pid)}
             processes(pid) = node
@@ -121,7 +121,7 @@ Namespace Kernel
             Return pid
         End Function
 
-        Public Sub KillProcess(pid As Integer)
+        Public Sub KillProcess(ByVal pid As Integer)
             If processes.ContainsKey(pid) Then
                 processes(pid).Kill()
             End If
@@ -131,7 +131,7 @@ Namespace Kernel
             Root.Tick()
         End Sub
 
-        Public Function GetProcess(pid As Integer) As ProcessNode
+        Public Function GetProcess(ByVal pid As Integer) As ProcessNode
             If processes.ContainsKey(pid) Then Return processes(pid)
             Return Nothing
         End Function
@@ -207,7 +207,7 @@ Namespace Kernel
             End Try
         End Function
 
-        Sub StartProcessFromVFS(p1 As String)
+        Sub StartProcessFromVFS(ByVal p1 As String)
             Throw New NotImplementedException()
         End Sub
 

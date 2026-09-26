@@ -1,11 +1,13 @@
 Imports System.Threading
+Imports Vibranium
+
 Namespace Vibranium.Sys
     Public Module Environment
         ' Maps thread IDs to process IDs
         Private threadToPid As New Dictionary(Of Integer, Integer)
 
         ' Call this when starting a process/thread
-        Public Sub RegisterThread(pid As Integer)
+        Public Sub RegisterThread(ByVal pid As Integer)
             Dim tid = Thread.CurrentThread.ManagedThreadId
             SyncLock threadToPid
                 threadToPid(tid) = pid
@@ -31,8 +33,8 @@ Namespace Vibranium.Sys
                     pid = threadToPid(tid)
                 End If
             End SyncLock
-            If pid >= 0 AndAlso ProcessManager IsNot Nothing Then
-                ProcessManager.KillProcess(pid)
+            If pid >= 0 AndAlso Core.ProcessManager IsNot Nothing Then
+                Core.ProcessManager.KillProcess(pid)
             End If
         End Sub
 
@@ -45,8 +47,8 @@ Namespace Vibranium.Sys
                     pid = threadToPid(tid)
                 End If
             End SyncLock
-            If pid >= 0 AndAlso ProcessManager IsNot Nothing Then
-                Return ProcessManager.GetProcess(pid)
+            If pid >= 0 AndAlso Core.ProcessManager IsNot Nothing Then
+                Return Core.ProcessManager.GetProcess(pid)
             End If
             Return Nothing
         End Function

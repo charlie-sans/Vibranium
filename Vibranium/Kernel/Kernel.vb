@@ -23,7 +23,7 @@ Namespace Vibranium.Kernel
             Try
                 Vibranium.Core.VFS = VFS
                 Vibranium.Core.ServiceHandler = ServiceHandler
-                Vibranium.Core.ProcessManager = New Vibranium.Kernel.ProcessManager()
+                Vibranium.Core.ProcessManager = New ProcessManager()
             Catch
             End Try
 

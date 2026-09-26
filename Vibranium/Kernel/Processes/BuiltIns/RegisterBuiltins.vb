@@ -18,7 +18,7 @@ Namespace Apps
         Function StartApp(ByVal path As String, Optional ByVal PPID As Integer = 0)
             Try
                 ' start builtin shell *can be replaced but not now
-                Dim Pid = ProcessManager.StartByPath(Core.VFS, path, parentPID:=PPID)
+                Dim Pid = Core.ProcessManager.StartByPath(Core.VFS, path, parentPID:=PPID)
                 If Pid = -1 Then
                     Debug.Log(LogLevel.Err, "Failed to start " & path & vbNewLine)
                     Return False
